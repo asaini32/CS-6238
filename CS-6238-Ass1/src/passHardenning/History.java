@@ -22,7 +22,7 @@ public class History {
 	
 	final static String FILE_NAME = "history.txt";
 //	private String keyString = "averylongtext!@$@#$#@$#*&(*&}{23432432432dsfsdf";
-    private String input = "john doe";
+    private String input = "the data from the history file needs to go here";
     byte[] encryptedText = null;
     Initialization init;
 	

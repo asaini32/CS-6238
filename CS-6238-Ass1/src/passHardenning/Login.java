@@ -6,12 +6,17 @@ import java.security.*;
 
 public class Login {
 
-	private BigInteger[] alphaBeta;
+	private BigInteger alpha;
+	private BigInteger beta;
+	private BigInteger[] xValues;
+	private BigInteger[] yValues;
 	BigInteger threshold;
 	InstructionTable inst;
+	Utilities util;
 	
-	public Login(){
-		inst = new InstructionTable();
+	public Login(InstructionTable inst, Utilities util){
+		this.inst = inst;
+		this.util = util;
 	}
 	
 	
@@ -26,11 +31,13 @@ public class Login {
 				*/
 				BigInteger value = featureValues[i];
 				if((value.compareTo(threshold))<0){			    //a needs to be replaced by threshold value
-					alphaBeta[i] = inst.getAlpha(i);					//a needs to be replaced by alpha value
+					alpha = inst.getAlpha(i);					//a needs to be replaced by alpha value
+					xValues[i] = util.P(inst.getR(), 2*i, init.getQ);
 				}
 				else
 				{
-					alphaBeta[i] = inst.getBeta(i);				//a needs to be replaced by beta values
+					beta = inst.getBeta(i);				//a needs to be replaced by beta values
+					xValues[i] = util.P(inst.getR(), 2*i+1, init.getQ);
 				}
 			}
 			
