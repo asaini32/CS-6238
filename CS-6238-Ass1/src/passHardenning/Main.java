@@ -27,9 +27,10 @@ public class Main {
 			
 			
 		}
-		System.out.println("Hello World!\n");
+
 		
 	}
+	
 	private static void doInit(Initialization init, Utilities util){
 		System.out.println("In init");
 		init.doFirstInit(util);
