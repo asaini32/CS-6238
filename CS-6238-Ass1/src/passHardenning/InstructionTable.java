@@ -9,12 +9,22 @@ public class InstructionTable {
 	BigInteger[] alpha;
 	BigInteger[] beta;
 	int m;
+	BigInteger r;
 	
-	public InstructionTable(){
+	public BigInteger getR(){
+		return r;
+	}
+	public InstructionTable(Initialization init){
 		//TODO : find a way to point this.util to main's copy of the utilities main.util
 		//  find a way to point this.polynomial to main's copy in main.init.polynomial
 		// also for this.q to point to main.init.q
 		// also for this.m to copy from main.init.m 
+		this.m = init.getM();
+		this.q = init.getQ();
+		this.util = init.getUtil();
+		this.polynomial = init.getPolynomial();
+		
+		r = util.getRandomH(q);
 		alpha = new BigInteger[m];
 		beta = new BigInteger[m];
 		

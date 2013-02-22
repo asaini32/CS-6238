@@ -10,6 +10,21 @@ public class Initialization {
 
 	
 	Utilities util;
+	public Utilities getUtil() {
+		return util;
+	}
+
+	public int getM() {
+		return m;
+	}
+
+	public BigInteger[] getPolynomial() {
+		return polynomial;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
 	private BigInteger q; // the 160 bit prime number
 	private int m; // 
 	private BigInteger hpwd;
