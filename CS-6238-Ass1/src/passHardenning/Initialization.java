@@ -9,7 +9,7 @@ public class Initialization {
 	private BigInteger q;
 	private BigInteger hpwd;
 	private int h;
-	private BigInteger[] polynomial;
+	 private BigInteger[] polynomial;
 	private int m;
 	
 	

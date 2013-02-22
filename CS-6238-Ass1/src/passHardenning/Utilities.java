@@ -5,10 +5,12 @@ import java.security.*;
 
 public class Utilities {
 	private SecureRandom random;
+	private MessageDigest md;
 	
 	public Utilities(){
 		try{
 		random = SecureRandom.getInstance("SHA1PRNG");
+		md = MessageDigest.getInstance("SHA-1");
 		} catch(NoSuchAlgorithmException e){
 			System.err.println("No such exception " + e );
 			
@@ -61,6 +63,24 @@ public class Utilities {
 		return true;
 	}
 	
+	//implementation of G_pwd() "PRF" to use to calculate alpha and beta
+	public BigInteger G(String pwd, BigInteger r, BigInteger input, BigInteger q){
+		//try just a concatenation of key at the back (prevent length extension?)
+		byte[] pwdB = pwd.getBytes();
+		byte[] rB = r.toByteArray();
+		byte[] inputB = input.toByteArray();
+		
+		//Concatenate all inputs into 1 long byte array
+		int totalInputLen = pwdB.length + rB.length + inputB.length;
+		byte[] totalInput = new byte[totalInputLen];
+		System.arraycopy(inputB, 0, totalInput, 0,                       inputB.length);
+		System.arraycopy(rB,     0, totalInput, inputB.length,           rB.length);
+		System.arraycopy(pwdB,   0, totalInput, inputB.length+rB.length, pwdB.length);
+		
+		
+		byte[] digest = md.digest(totalInput);
+		return new BigInteger(digest).mod(q);
+	}
 	
 	private void secretShare(){
 		
