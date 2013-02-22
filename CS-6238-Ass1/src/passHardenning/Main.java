@@ -11,7 +11,7 @@ public class Main {
 		
 		Utilities util = new Utilities();
 		Initialization init = new Initialization(); //contains all the system parameters like q
-		
+		History history = new History(init);
 		
 		//Check if user decided to initialize the whole system from scratch
 		if(args.length > 0){

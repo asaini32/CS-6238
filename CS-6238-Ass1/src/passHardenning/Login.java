@@ -15,8 +15,7 @@ public class Login {
 	}
 	
 	
-	private BigInteger[] getAlphaBeta(BigInteger[] featureValues){
-	
+	private void calculateXY(BigInteger[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
@@ -27,11 +26,11 @@ public class Login {
 				*/
 				BigInteger value = featureValues[i];
 				if((value.compareTo(threshold))<0){			    //a needs to be replaced by threshold value
-					alphaBeta[i] = inst.getAlpha();					//a needs to be replaced by alpha value
+					alphaBeta[i] = inst.getAlpha(i);					//a needs to be replaced by alpha value
 				}
 				else
 				{
-					alphaBeta[i] = inst.getBeta();				//a needs to be replaced by beta values
+					alphaBeta[i] = inst.getBeta(i);				//a needs to be replaced by beta values
 				}
 			}
 			
@@ -39,11 +38,6 @@ public class Login {
 		catch(Exception e){
 			
 		}
-		return alphaBeta;
-	}
-	
-	private void calculateXY(int alpha, int beta){
-		
 	}
 	
 	private void calculateHpwd(){
