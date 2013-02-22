@@ -30,7 +30,7 @@ public class History {
 		this.init = init;
 	}
 	
-	private void decrypt(){
+	public void decrypt(BigInteger candidateHpwd){
 			
 		 	BigInteger keyString = init.getHpwd();
 	        // setup AES cipher in CBC mode with PKCS #5 padding
@@ -117,7 +117,7 @@ public class History {
         }
 	}
 	
-	private void encrypt(){
+	public void encrypt(){
 		
 		BigInteger keyString = init.getHpwd();
 		

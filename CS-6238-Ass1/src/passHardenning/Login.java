@@ -14,15 +14,19 @@ public class Login {
 	InstructionTable inst;
 	Utilities util;
 	Initialization init;
-	
-	public Login(InstructionTable inst, Utilities util, Initialization init){
+	History history;
+	private BigInteger candidateHpwd; 
+
+
+	public Login(InstructionTable inst, Utilities util, Initialization init, History history){
 		this.inst = inst;
 		this.util = util;
 		this.init = init;
+		this.history = history;
 	}
 	
 	
-	private void calculateXY(float[] featureValues){
+	public void calculateXY(float[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
@@ -45,6 +49,7 @@ public class Login {
 					yValues[i] = beta.subtract((util.G(init.pwd, inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
 				}
 			}
+			calculateHpwd();   //calling the function to calculate Hpwd
 			
 		}
 		catch(Exception e){
@@ -52,9 +57,15 @@ public class Login {
 		}
 	}
 	
+	//method to calculate Hpwd
 	private void calculateHpwd(){
 		try{
-			
+			int count = init.getM();
+			for(int i=0; i<count; i++){			
+				//calculated 
+				this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(init.getQ()));
+			}
+			decryptHistoryFile();    //calling the method to decrypt history file
 		}
 		catch(Exception e){
 			
@@ -62,7 +73,7 @@ public class Login {
 	}
 	
 	private void decryptHistoryFile(){
-		
+		history.decrypt(candidateHpwd);
 	}
 	
 	private void verifyHistoryFile(){
@@ -76,4 +87,26 @@ public class Login {
 	private void generateInstructionsTable(String pass){
 		
 	}
+	
+	//method to calculate lamda that is used in Hped calculation
+	private BigInteger Lamda(int i){
+		BigInteger lamda = null;
+		try{ 
+			int count = init.getM();
+			for(int j =0; j<count; j++){
+				if(i!=j){
+					lamda.multiply(xValues[j].divide(xValues[j].subtract(xValues[i])));
+				}
+			}
+		}
+		catch(Exception e){
+			
+		}
+		return lamda;
+	}
+	
+	public BigInteger getCandidateHpwd() {
+		return candidateHpwd;
+	}
+	
 }
