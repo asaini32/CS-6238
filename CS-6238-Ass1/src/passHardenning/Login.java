@@ -10,17 +10,19 @@ public class Login {
 	private BigInteger beta;
 	private BigInteger[] xValues;
 	private BigInteger[] yValues;
-	BigInteger threshold;
+	float threshold;
 	InstructionTable inst;
 	Utilities util;
+	Initialization init;
 	
-	public Login(InstructionTable inst, Utilities util){
+	public Login(InstructionTable inst, Utilities util, Initialization init){
 		this.inst = inst;
 		this.util = util;
+		this.init = init;
 	}
 	
 	
-	private void calculateXY(BigInteger[] featureValues){
+	private void calculateXY(float[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
@@ -29,26 +31,34 @@ public class Login {
 				*and comparing it to threshold value to get the alpha and 
 				*beta values
 				*/
-				BigInteger value = featureValues[i];
-				if((value.compareTo(threshold))<0){			    //a needs to be replaced by threshold value
-					alpha = inst.getAlpha(i);					//a needs to be replaced by alpha value
-					xValues[i] = util.P(inst.getR(), 2*i, init.getQ);
+				float value = featureValues[i];
+				if(value<threshold){			    
+					alpha = inst.getAlpha(i);					
+					//calculating the x and y values from the alpha and beta values
+					xValues[i] = util.P(inst.getR(), 2*i, init.getQ());
+					yValues[i] = alpha.subtract((util.G(init.pwd, inst.getR(), 2*i, init.getQ()))).mod(init.getQ());
 				}
 				else
 				{
 					beta = inst.getBeta(i);				//a needs to be replaced by beta values
-					xValues[i] = util.P(inst.getR(), 2*i+1, init.getQ);
+					xValues[i] = util.P(inst.getR(), 2*i+1, init.getQ());
+					yValues[i] = beta.subtract((util.G(init.pwd, inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
 				}
 			}
 			
 		}
 		catch(Exception e){
-			
+			System.out.println("Error in calculateXY");
 		}
 	}
 	
 	private void calculateHpwd(){
-		
+		try{
+			
+		}
+		catch(Exception e){
+			
+		}
 	}
 	
 	private void decryptHistoryFile(){
