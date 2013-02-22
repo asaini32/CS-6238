@@ -1,5 +1,7 @@
 package passHardenning;
 
+import java.math.BigInteger;
+
 public class InstructionTable {
 
 	private void decrypt(String pass){
@@ -10,11 +12,13 @@ public class InstructionTable {
 		
 	}
 	
-	private void getAlpha(){
+	BigInteger getAlpha(){
+		return null;
 		
 	}
 	
-	private void getBeta(){
+	BigInteger getBeta(){
+		return null;
 		
 	}
 }
