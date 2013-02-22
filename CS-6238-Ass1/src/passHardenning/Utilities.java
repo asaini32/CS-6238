@@ -23,6 +23,7 @@ public class Utilities {
 		BigInteger runningTotal = new BigInteger("0");
 		for(int i = 0; i < poly.length; i++){
 			runningTotal.add(x.pow(i).multiply(poly[0]));
+			runningTotal = runningTotal.mod(q);
 		}
 		return runningTotal;
 	}
@@ -68,10 +69,9 @@ public class Utilities {
 	
 	private boolean isPrime(BigInteger num){
 		//Perform Miller Rabin's test
-		
-		// TODO 
-		return true;
+		return num.isProbablePrime(10); //99.90234375% confidence
 	}
+	
 	//implementation of P_r() "PRP" with SHA-1 (likely not a PRP?)
 	public BigInteger P(BigInteger r, int input, BigInteger q){
 		byte[] rB = r.toByteArray();
