@@ -2,15 +2,20 @@ package passHardenning;
 import java.math.BigInteger;
 import java.util.Random;
 
+
+//Main holds a (singleton) Initialization object
+//The Initialization object stores system wide parameters
+//like q, m, the polynomial, the hpwd
 public class Initialization {
 
 	
 	Utilities util;
-	private BigInteger q;
+	private BigInteger q; // the 160 bit prime number
+	private int m; // 
 	private BigInteger hpwd;
 	private int h;
-	 private BigInteger[] polynomial;
-	private int m;
+	private BigInteger[] polynomial;
+	String pwd; //normal, unhardened password
 	
 	
 	
@@ -35,6 +40,9 @@ public class Initialization {
 	}
 	private void chooseM(){
 		m = 10;
+	}
+	public void askUserForPassword(){
+		//Use System.in or scanner class to get user's password and set to this.pwd
 	}
 	
 	private void choosePolynomial(){

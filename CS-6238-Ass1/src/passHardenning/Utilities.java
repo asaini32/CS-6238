@@ -2,7 +2,9 @@ package passHardenning;
 import java.security.SecureRandom;
 import java.math.BigInteger;
 import java.security.*;
+import java.lang.Integer;
 
+//This class holds all the system wide parameters
 public class Utilities {
 	private SecureRandom random;
 	private MessageDigest md;
@@ -15,6 +17,14 @@ public class Utilities {
 			System.err.println("No such exception " + e );
 			
 		}
+	}
+	//evalute poly at point x
+	public BigInteger evaluatePoly(BigInteger[] poly, BigInteger q, BigInteger x){
+		BigInteger runningTotal = new BigInteger("0");
+		for(int i = 0; i < poly.length; i++){
+			runningTotal.add(x.pow(i).multiply(poly[0]));
+		}
+		return runningTotal;
 	}
 	
 	//generate a poly of degree m-1 with constant term = hpwd
@@ -62,13 +72,29 @@ public class Utilities {
 		// TODO 
 		return true;
 	}
+	//implementation of P_r() "PRP" with SHA-1 (likely not a PRP?)
+	public BigInteger P(BigInteger r, int input, BigInteger q){
+		byte[] rB = r.toByteArray();
+		byte[] inputB = new byte[1];
+		inputB[0] = new Integer(input).byteValue();
+		
+		int totalInputLen = rB.length + inputB.length;
+		byte[] totalInput = new byte[totalInputLen];
+		System.arraycopy(inputB, 0, totalInput, 0,             inputB.length);
+		System.arraycopy(rB,     0, totalInput, inputB.length, rB.length);
+		
+		byte[] digest = md.digest(totalInput);
+		
+		return new BigInteger(digest).mod(q);
+	}
 	
 	//implementation of G_pwd() "PRF" to use to calculate alpha and beta
-	public BigInteger G(String pwd, BigInteger r, BigInteger input, BigInteger q){
+	public BigInteger G(String pwd, BigInteger r, int input, BigInteger q){
 		//try just a concatenation of key at the back (prevent length extension?)
 		byte[] pwdB = pwd.getBytes();
 		byte[] rB = r.toByteArray();
-		byte[] inputB = input.toByteArray();
+		byte[] inputB = new byte[1];
+		inputB[0] = new Integer(input).byteValue();
 		
 		//Concatenate all inputs into 1 long byte array
 		int totalInputLen = pwdB.length + rB.length + inputB.length;
