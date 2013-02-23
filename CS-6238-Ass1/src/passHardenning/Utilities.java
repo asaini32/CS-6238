@@ -4,20 +4,20 @@ import java.math.BigInteger;
 import java.security.*;
 import java.lang.Integer;
 
-//This class holds all the system wide parameters
+//Provides common crypto or math utilities
 public class Utilities {
 	private SecureRandom random;
 	private MessageDigest md;
 	
 	public Utilities(){
 		try{
-		random = SecureRandom.getInstance("SHA1PRNG");
-		md = MessageDigest.getInstance("SHA-1");
+			random = SecureRandom.getInstance("SHA1PRNG");
+			md = MessageDigest.getInstance("SHA-1");
 		} catch(NoSuchAlgorithmException e){
-			System.err.println("No such exception " + e );
-			
+			System.err.println("No such algorithm " + e );
 		}
 	}
+	
 	//evalute poly at point x
 	public BigInteger evaluatePoly(BigInteger[] poly, BigInteger q, BigInteger x){
 		BigInteger runningTotal = new BigInteger("0");

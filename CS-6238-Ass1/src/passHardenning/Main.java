@@ -2,78 +2,52 @@ package passHardenning;
 
 import java.util.Scanner;
 
+
 public class Main {
 
 	/**
 	 * @param args
 	 */
-	
+	public static final int m = 10; //number of questions/answers/distinguishing features
+	public static final int h = 10; //number of records to keep in history
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
-		Utilities util = new Utilities();
-		Initialization init = new Initialization(); //contains all the system parameters like q
-
-		
-		
-		//Check if user decided to initialize the whole system from scratch
-		if(args.length > 0){
-			if(args[0].equalsIgnoreCase("init")){
-				doInit(init, util);
-				return;	
+		// New user or first time running
+		if (args.length > 0) {
+			if (args[0].equalsIgnoreCase("init")) {
+				newUser();
 			}
-			
-		} 
-		//This case is when a system is already initialized, so 
-		//read the q, h file, m, etc from an existing file instead
+			else{ System.err.println("Invalid argument " + args[0]);}
+		}
+		// Normal operation, immediately perform log-in steps
 		else {
-			
-
+				doLogin();
 		}
 
-		History history = new History(init);
-		InstructionTable inst = new InstructionTable(init);
-		Login login = new Login(inst, util, init, history);
+
+
+		// Ask the log in questions
+
+
+	}
+
+	
+	private static void newUser() {
+		Initialization init = new Initialization(); 
+		init.initializeNewUser(); //fill the init object with values needed later on.
 		
-		
-		//Ask the log in questions
-		Question[] questions = new Question[init.getM()];
-		initializeQuestions(questions);
-		int[] answers = askQuestions(questions);
-		
-		
-		
+		//erase the password from memory
+		init.clearPassword();
 	}
 	
-	private static void initializeQuestions(Question[] questions) {
-		// TODO Auto-generated method stub
-		String qString[] = {"1. How long ...", 
-				            "2. How many ...",
-				            "3. How much ...",
-				            "4. How many ...",
-				            "5. How many ...",
-				            "6. How many ...",
-				            "7. How many ...",
-				            "8. How many ...",
-				            "9. How many ...",
-				            "10. How many ...",};
+	private static void doLogin(){
+		Initialization init = new Initialization(); 
+		init.initializeExistingUser(); //fill the init object with values needed later on.
 		
-		for(int i = 0; i < questions.length; i++){
-			questions[i] = new Question(qString[i]);
-		}
+		
+		init.clearPassword();	
 	}
+	
 
-	private static void doInit(Initialization init, Utilities util){
-		System.out.println("In init");
-		init.doFirstInit(util);
-		
-	}
-	private static int[] askQuestions(Question[] questions){
-		int[] answers = new int[questions.length];
-		Scanner sc = new Scanner(System.in);
-		for(int i = 0; i < answers.length; i++){
-			answers[i] = questions[i].ask(sc);	
-		}
-		return answers;
-	}
 }
