@@ -13,9 +13,7 @@ public class Main {
 		
 		Utilities util = new Utilities();
 		Initialization init = new Initialization(); //contains all the system parameters like q
-		History history = new History(init);
-		InstructionTable inst = new InstructionTable(init);
-		Login login = new Login(inst, util, init, history);
+
 		
 		
 		//Check if user decided to initialize the whole system from scratch
@@ -32,6 +30,11 @@ public class Main {
 			
 
 		}
+
+		History history = new History(init);
+		InstructionTable inst = new InstructionTable(init);
+		Login login = new Login(inst, util, init, history);
+		
 		
 		//Ask the log in questions
 		Question[] questions = new Question[init.getM()];
