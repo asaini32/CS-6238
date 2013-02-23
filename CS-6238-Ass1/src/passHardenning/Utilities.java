@@ -108,8 +108,12 @@ public class Utilities {
 		return new BigInteger(digest).mod(q);
 	}
 	public byte[] charToByteArray(char[] pwd){
-		//http://stackoverflow.com/questions/4931854/converting-char-array-into-byte-array-and-back-again
-		return null;
+		byte[] bytes = new byte[pwd.length*2];
+		for(int i=0;i<pwd.length;i++) {
+		   bytes[i*2] = (byte) (pwd[i] >> 8);
+		   bytes[i*2+1] = (byte) pwd[i];
+		}
+		return bytes;
 	}
 	
 	private void secretShare(){
