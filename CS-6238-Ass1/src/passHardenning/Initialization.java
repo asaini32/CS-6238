@@ -41,11 +41,16 @@ public class Initialization {
 		userName = readUserName();
 		pwd = readPwd();
 		answers = askQuestions();
+		history = new History(this);
+		inst = new InstructionTable(this);
+		login = new Login(inst, util, this, history);
 	}
 	
 
 	public void initializeNewUser(){
 		//draw inspiration from doFirstInit()
+		chooseQ();
+		chooseHPwd();
 	} 
 	public void initializeExistingUser(){
 		
@@ -99,8 +104,12 @@ public class Initialization {
 	
 	
 	private char[] readPwd(){
-		return System.console().readPassword("Password: \n");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Password: ");
+		return sc.next().toCharArray();
+		//return System.console().readPassword("Password: ");
 	}
+	
 	//Prompt for and return user name
 	private String readUserName(){
 		Scanner sc  = new Scanner(System.in); 
