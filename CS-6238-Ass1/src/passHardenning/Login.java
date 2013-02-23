@@ -24,7 +24,7 @@ public class Login {
 	}
 
 	public void doLogin(){	
-		//this.calculateXY(featureValues); 					 //pass feature value
+		this.calculateXY(init.answers); 					 //pass feature value
 		this.calculateHpwd();   							//calling the function to calculate Hpwd
 		this.decryptHistoryFile();							//decrypting the history file.
 		boolean status = this.verifyHistoryFile();			//verifying the history file.
@@ -35,7 +35,7 @@ public class Login {
 		this.updateHistoryFile();							//updating the history file.
 	}
 
-	private void calculateXY(float[] featureValues){
+	private void calculateXY(int[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
