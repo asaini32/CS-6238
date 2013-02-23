@@ -1,7 +1,5 @@
 package passHardenning;
-import java.security.SecureRandom;
 import java.math.BigInteger;
-import java.security.*;
 
 
 public class Login {
@@ -24,23 +22,28 @@ public class Login {
 		this.init = init;
 		this.history = history;
 	}
-	
+
 	public void doLogin(){	
-		//this.calculateXY(featureValues);  //pass feature value
-		this.calculateHpwd();   			//calling the function to calculate Hpwd
-		this.decryptHistoryFile();			//decrypting the history file.
-		this.verifyHistoryFile();			//verifying the history file.
+		//this.calculateXY(featureValues); 					 //pass feature value
+		this.calculateHpwd();   							//calling the function to calculate Hpwd
+		this.decryptHistoryFile();							//decrypting the history file.
+		boolean status = this.verifyHistoryFile();			//verifying the history file.
+		if(status)
+		{
+			System.out.println("Login Successful");
+		}
+		this.updateHistoryFile();							//updating the history file.
 	}
-	
+
 	private void calculateXY(float[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
 			{	
 				/*getting the alpha and beta values from the Instruction table
-				*and comparing it to threshold value to get the alpha and 
-				*beta values
-				*/
+				 *and comparing it to threshold value to get the alpha and 
+				 *beta values
+				 */
 				float value = featureValues[i];
 				if(value<threshold){			    
 					alpha = inst.getAlpha(i);					
@@ -55,44 +58,49 @@ public class Login {
 					yValues[i] = beta.subtract((util.G(init.pwd, inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
 				}
 			}
-			
+
 		}
 		catch(Exception e){
 			System.out.println("Error in calculateXY");
 		}
 	}
-	
+
 	//method to calculate Hpwd
 	private void calculateHpwd(){
 		try{
 			int count = init.getM();
 			for(int i=0; i<count; i++){			
-				//calculated 
+				//calculated the hardened password from the 
+				//values in the alpha beta instruction table
 				this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(init.getQ()));
 			}
 			decryptHistoryFile();    //calling the method to decrypt history file
 		}
 		catch(Exception e){
-			
+
 		}
 	}
-	
+
+	//calls the decrypt method in the history file
 	private void decryptHistoryFile(){
 		history.decrypt(candidateHpwd);
 	}
-	
-	private void verifyHistoryFile(){
-		history.checkDecryption();
+
+	//verifies the decrypted file
+	private boolean verifyHistoryFile(){
+		return history.checkDecryption();
 	}
-	
+
+	//updated the history file
+	//calls a method in the history class.
 	private void updateHistoryFile(){
-		
+		history.update();
 	}
-	
+
 	private void generateInstructionsTable(String pass){
-		
+		//TODO: the instruction table needs to be build
 	}
-	
+
 	//method to calculate lamda that is used in Hped calculation
 	private BigInteger Lamda(int i){
 		BigInteger lamda = null;
@@ -105,13 +113,14 @@ public class Login {
 			}
 		}
 		catch(Exception e){
-			
+
 		}
 		return lamda;
 	}
-	
+
+	//getter for candidate password
 	public BigInteger getCandidateHpwd() {
 		return candidateHpwd;
 	}
-	
+
 }
