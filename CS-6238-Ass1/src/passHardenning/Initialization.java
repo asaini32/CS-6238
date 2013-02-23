@@ -41,11 +41,8 @@ public class Initialization {
 		userName = readUserName();
 		pwd = readPwd();
 		answers = askQuestions();
-		history = new History(this);
-		inst = new InstructionTable(this);
-		login = new Login(inst, util, this, history);
+
 	}
-	
 
 	public void initializeNewUser(){
 		//draw inspiration from doFirstInit()
@@ -53,7 +50,11 @@ public class Initialization {
 		chooseHPwd();
 	} 
 	public void initializeExistingUser(){
-		
+		chooseQ();
+		chooseHPwd();
+		history = new History(this);
+		inst = new InstructionTable(this);
+		login = new Login(inst, util, this, history);
 	}
 	
 	//this is when it's the initialization for the first time
