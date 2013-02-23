@@ -26,16 +26,13 @@ public class Main {
 		}
 
 
-
-		// Ask the log in questions
-
-
 	}
 
 	
 	private static void newUser() {
 		Initialization init = new Initialization(); 
 		init.initializeNewUser(); //fill the init object with values needed later on.
+		
 		
 		//erase the password from memory
 		init.clearPassword();
@@ -45,7 +42,8 @@ public class Main {
 		Initialization init = new Initialization(); 
 		init.initializeExistingUser(); //fill the init object with values needed later on.
 		
-		
+		//Invoke Login object
+		init.getLogin().doLogin();
 		init.clearPassword();	
 	}
 	

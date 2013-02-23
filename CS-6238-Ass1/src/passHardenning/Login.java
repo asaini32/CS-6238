@@ -49,13 +49,13 @@ public class Login {
 					alpha = inst.getAlpha(i);					
 					//calculating the x and y values from the alpha and beta values
 					xValues[i] = util.P(inst.getR(), 2*i, init.getQ());
-					yValues[i] = alpha.subtract((util.G(init.pwd, inst.getR(), 2*i, init.getQ()))).mod(init.getQ());
+					yValues[i] = alpha.subtract((util.G(init.getPwd(), inst.getR(), 2*i, init.getQ()))).mod(init.getQ());
 				}
 				else
 				{
 					beta = inst.getBeta(i);				//a needs to be replaced by beta values
 					xValues[i] = util.P(inst.getR(), 2*i+1, init.getQ());
-					yValues[i] = beta.subtract((util.G(init.pwd, inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
+					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
 				}
 			}
 

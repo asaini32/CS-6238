@@ -89,9 +89,9 @@ public class Utilities {
 	}
 	
 	//implementation of G_pwd() "PRF" to use to calculate alpha and beta
-	public BigInteger G(String pwd, BigInteger r, int input, BigInteger q){
+	public BigInteger G(char[] pwd, BigInteger r, int input, BigInteger q){
 		//try just a concatenation of key at the back (prevent length extension?)
-		byte[] pwdB = pwd.getBytes();
+		byte[] pwdB = charToByteArray(pwd);
 		byte[] rB = r.toByteArray();
 		byte[] inputB = new byte[1];
 		inputB[0] = new Integer(input).byteValue();
@@ -106,6 +106,10 @@ public class Utilities {
 		
 		byte[] digest = md.digest(totalInput);
 		return new BigInteger(digest).mod(q);
+	}
+	public byte[] charToByteArray(char[] pwd){
+		//http://stackoverflow.com/questions/4931854/converting-char-array-into-byte-array-and-back-again
+		return null;
 	}
 	
 	private void secretShare(){

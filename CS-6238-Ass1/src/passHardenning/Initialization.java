@@ -20,13 +20,13 @@ public class Initialization {
 	private String userName;
 	int[] answers; // raw feature values (answers to questions)
 	private char[] pwd; //normal, unhardened password
-	private byte[] hpwd; //hardened password
+	private BigInteger hpwd; //hardened password
 	
 	private BigInteger q; // the 160 bit prime number that's modulus group
 	private BigInteger[] polynomial;
 
 	private final int m;  // how many questions/feature answers
-	private final int h;  // how many records to keep in history file
+	private final int h;  // how mBigIntegerany records to keep in history file
 
 	private History history;
 	private InstructionTable inst;
@@ -57,23 +57,19 @@ public class Initialization {
 		this.util = util;
 		this.chooseQ();
 		this.chooseHPwd();
-		this.chooseH();
-		this.chooseM();
+
 		this.choosePolynomial();
 	}
 	
 	
 	public void clearPassword(){
 		java.util.Arrays.fill(pwd, ' ');
-		java.util.Arrays.fill(hpwd, (byte)0);
+		hpwd = null; // not really overwriting since BigIntegers are immutable
 	}
 	
 	//this is when initializing from an existing file
 	public void doInit(){
 		
-	}
-	private void chooseM(){
-		m = 10;
 	}
 	public void askUserForPassword(){
 		//Use System.in or scanner class to get user's password and set to this.pwd
@@ -92,11 +88,7 @@ public class Initialization {
 		//hpwd is the hardened password
 		hpwd = util.getRandomH(q);
 	}
-	
-	private void chooseH(){
-		h = 10; //set by ourselves
-	}
-	
+		
 	private void generateInstructionTable(){
 		
 	}
@@ -177,7 +169,37 @@ public class Initialization {
 		return polynomial;
 	}
 
-	public String getPwd() {
+	public char[] getPwd() {
 		return pwd;
+	}
+
+
+	public static String[] getQstring() {
+		return qString;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public int[] getAnswers() {
+		return answers;
+	}
+
+
+	public History getHistory() {
+		return history;
+	}
+
+
+	public InstructionTable getInst() {
+		return inst;
+	}
+
+
+	public Login getLogin() {
+		return login;
 	}
 }

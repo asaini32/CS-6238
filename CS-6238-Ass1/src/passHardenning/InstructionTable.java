@@ -36,7 +36,7 @@ public class InstructionTable {
 	private void writeToDisk(String pass){
 		
 	}
-	public void buildInstrTable(BigInteger r, String pwd){
+	public void buildInstrTable(BigInteger r, char[] pwd){
 		for(int i = 0; i < m; i++){
 			alpha[i] = calculateAlpha(r, i, pwd);
 			beta[i] = calculateBeta(r, i, pwd);
@@ -51,16 +51,16 @@ public class InstructionTable {
 	}
 	
 	//r is unique to each user, see page 74 of Monrose section 5.1 item 1
-	private BigInteger calculateAlpha(BigInteger r, int i, String pwd){
+	private BigInteger calculateAlpha(BigInteger r, int i, char[] pwd){
 		return calculateAlphaBeta(r, i * 2 , pwd);
 	}
 	
 	//wrapper for calculateAlphaBeta() 
-	private BigInteger calculateBeta(BigInteger r, int i, String pwd){
+	private BigInteger calculateBeta(BigInteger r, int i, char[] pwd){
 		return calculateAlphaBeta(r, i * 2 + 1, pwd);
 		
 	}
-	private BigInteger calculateAlphaBeta(BigInteger r, int input, String pwd){
+	private BigInteger calculateAlphaBeta(BigInteger r, int input, char[] pwd){
 		BigInteger randomizedX = util.P(r, input , q);
 		BigInteger y = util.evaluatePoly(polynomial, r, randomizedX); // this is y_{ai}^0/1 in Monrose section 5.1 item 2
 		BigInteger g = util.G(pwd, r, input, q); 
