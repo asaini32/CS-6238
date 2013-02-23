@@ -10,6 +10,7 @@ public class InstructionTable {
 	BigInteger[] beta;
 	int m;
 	BigInteger r;
+	float[] threshold;
 	
 	public BigInteger getR(){
 		return r;
@@ -23,7 +24,7 @@ public class InstructionTable {
 		this.q = init.getQ();
 		this.util = init.getUtil();
 		this.polynomial = init.getPolynomial();
-		
+		threshold = new float[m];
 		r = util.getRandomH(q);
 		alpha = new BigInteger[m];
 		beta = new BigInteger[m];
