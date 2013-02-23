@@ -25,8 +25,14 @@ public class Login {
 		this.history = history;
 	}
 	
+	public void doLogin(){	
+		//this.calculateXY(featureValues);  //pass feature value
+		this.calculateHpwd();   			//calling the function to calculate Hpwd
+		this.decryptHistoryFile();			//decrypting the history file.
+		this.verifyHistoryFile();			//verifying the history file.
+	}
 	
-	public void calculateXY(float[] featureValues){
+	private void calculateXY(float[] featureValues){
 		try{
 			int count = featureValues.length;
 			for(int i=0; i<count; i++)
@@ -49,7 +55,6 @@ public class Login {
 					yValues[i] = beta.subtract((util.G(init.pwd, inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
 				}
 			}
-			calculateHpwd();   //calling the function to calculate Hpwd
 			
 		}
 		catch(Exception e){
@@ -77,7 +82,7 @@ public class Login {
 	}
 	
 	private void verifyHistoryFile(){
-		
+		history.checkDecryption();
 	}
 	
 	private void updateHistoryFile(){
