@@ -8,7 +8,7 @@ public class Main {
 	/**
 	 * @param args
 	 */
-	public static final int m = 10; //number of questions/answers/distinguishing features
+	public static final int m = 2; //number of questions/answers/distinguishing features
 	public static final int h = 10; //number of records to keep in history
 
 	public static void main(String[] args) {

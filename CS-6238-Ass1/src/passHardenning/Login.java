@@ -83,6 +83,7 @@ public class Login {
 				candidateHpwd = this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(inst.q));
 			}
 			System.out.println("Candidate Hpwd: " + candidateHpwd);
+			System.out.println("q is " + inst.q);
 		}
 		catch(Exception e){
 

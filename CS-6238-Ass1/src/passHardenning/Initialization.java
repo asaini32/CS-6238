@@ -49,6 +49,7 @@ public class Initialization {
 		//Generate files for this new user...
 		generateInstructionTable();		
 		System.out.println("hpwd is " + hpwd);
+		System.out.println("q is " + q);
 		generateHistoryFile();
 		
 	} 
@@ -92,13 +93,15 @@ public class Initialization {
 	private void generateInstructionTable(){
 		//Choose the system parameters for the 1st time
 		chooseQ();
+		System.out.println("q is just chosen. it is " + q);
 		chooseHPwd();
 		System.out.println("immediately hpwd is " + hpwd + " and compare is " + hpwd.compareTo(BigInteger.ZERO) );
-		
+		System.out.println("polynomial is just chosen. q is " + q);
 		choosePolynomial();
 		
 		//Calculate the alpha and beta values
 		inst.buildInstrTable(); //calculate the alpha and beta values
+		System.out.println("instruction table is just built. q is " + q);
 		inst.writeInstrTable(); //write it to disk for future logins to use
 	}
 	

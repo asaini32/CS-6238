@@ -42,10 +42,11 @@ public class InstructionTable {
 	public void buildInstrTable(){
 		
 		q = init.getQ();
+		System.out.println("In Instruction table: the q i got is: " + q);
 		r = util.getRandomH(q);
 		hpwd = init.getHpwd();
 		polynomial = init.getPolynomial();
-
+		System.out.println("Calculating alpha beta now..");
 		for(int i = 0; i < m; i++){
 			alpha[i] = calculateAlpha(r, i, pwd);
 			beta[i] = calculateBeta(r, i, pwd);
@@ -159,7 +160,7 @@ public class InstructionTable {
 	private BigInteger calculateAlphaBeta(BigInteger r, int input, char[] pwd){
 		BigInteger randomizedX = util.P(r, input , q);
 		System.out.println("X[" + input + "] is " + randomizedX);
-		BigInteger y = util.evaluatePoly(polynomial, r, randomizedX); // this is y_{ai}^0/1 in Monrose section 5.1 item 2
+		BigInteger y = util.evaluatePoly(polynomial, q, randomizedX); // this is y_{ai}^0/1 in Monrose section 5.1 item 2
 		System.out.println("y[" + input + "] is " + y);
 		BigInteger g = util.G(pwd, r, input, q); 
 		return y.add(g).mod(q);
