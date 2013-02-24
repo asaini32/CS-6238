@@ -13,7 +13,7 @@ public class Question {
 			try{	
 				System.out.println(question);
 				return sc.nextInt();
-			} catch (Exception e){ System.err.println("Error reading input, please try again.");}
+			} catch (Exception e){ System.err.println("Error reading input, please try again."); sc.nextLine();}
 		}
 	}
 }

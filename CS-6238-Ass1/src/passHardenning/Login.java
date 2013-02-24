@@ -8,7 +8,6 @@ public class Login {
 	private BigInteger beta;
 	private BigInteger[] xValues;
 	private BigInteger[] yValues;
-	float threshold;
 	InstructionTable inst;
 	Utilities util;
 	Initialization init;
@@ -45,7 +44,7 @@ public class Login {
 				 *beta values
 				 */
 				float value = featureValues[i];
-				if(value<threshold){			    
+				if(value<inst.threshold[i]){			    
 					alpha = inst.getAlpha(i);					
 					//calculating the x and y values from the alpha and beta values
 					xValues[i] = util.P(inst.getR(), 2*i, init.getQ());
@@ -61,7 +60,7 @@ public class Login {
 
 		}
 		catch(Exception e){
-			System.out.println("Error in calculateXY");
+			System.out.println("Error in calculateXY " + e);
 		}
 	}
 

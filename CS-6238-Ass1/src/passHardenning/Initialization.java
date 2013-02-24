@@ -41,32 +41,20 @@ public class Initialization {
 		userName = readUserName();
 		pwd = readPwd();
 		answers = askQuestions();
+		inst = new InstructionTable(this);
 
 	}
 
 	public void initializeNewUser(){
-		//draw inspiration from doFirstInit()
-		chooseQ();
-		chooseHPwd();
+		generateInstructionTable();		
+		
 	} 
 	public void initializeExistingUser(){
-		chooseQ();
-		chooseHPwd();
+		inst.readInstrTable(); // read the alpha and beta values
+		
 		history = new History(this);
-		inst = new InstructionTable(this);
 		login = new Login(inst, util, this, history);
 	}
-	
-	//this is when it's the initialization for the first time
-	public void doFirstInit(Utilities util, String userName){
-		System.out.println("initialization class will take over.");
-		this.util = util;
-		this.chooseQ();
-		this.chooseHPwd();
-
-		this.choosePolynomial();
-	}
-	
 	
 	public void clearPassword(){
 		java.util.Arrays.fill(pwd, ' ');
@@ -96,7 +84,10 @@ public class Initialization {
 	}
 		
 	private void generateInstructionTable(){
-		
+		chooseQ();
+		chooseHPwd();
+		choosePolynomial();
+		inst.buildInstrTable(); //calculate the alpha and beta values
 	}
 	
 	private void generateHistoryFile(){

@@ -24,10 +24,7 @@ public class Main {
 		else {
 				doLogin();
 		}
-
-
 	}
-
 	
 	private static void newUser() {
 		Initialization init = new Initialization(); 
@@ -44,6 +41,8 @@ public class Main {
 		
 		//Invoke Login object
 		init.getLogin().doLogin();
+		
+		
 		init.clearPassword();	
 	}
 	

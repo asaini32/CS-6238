@@ -48,8 +48,7 @@ public class Utilities {
 	    
 	    	candidateQ = new BigInteger(bytes);
 	    }
-		while(isPrime(candidateQ) == false);
-		
+		while(candidateQ.compareTo(BigInteger.ZERO) == -1 && isPrime(candidateQ) == false);
 		return candidateQ;
 	}
 	
@@ -63,7 +62,7 @@ public class Utilities {
     
 			candidateH = new BigInteger(bytes);
 		} 
-		while(candidateH.compareTo(q) != -1);
+		while(candidateH.compareTo(q) != -1 && candidateH.compareTo(BigInteger.ZERO) == -1);
 		return candidateH;
 	}
 	
