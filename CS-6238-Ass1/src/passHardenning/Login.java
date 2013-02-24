@@ -48,20 +48,21 @@ public class Login {
 				if(value<inst.threshold[i]){			    
 					alpha = inst.getAlpha(i);					
 					//calculating the x and y values from the alpha and beta values
-					xValues[i] = util.P(inst.getR(), 2*i, init.getQ());
-					yValues[i] = alpha.subtract((util.G(init.getPwd(), inst.getR(), 2*i, init.getQ()))).mod(init.getQ());
+					xValues[i] = util.P(inst.getR(), 2*i, inst.q);
+					yValues[i] = alpha.subtract((util.G(init.getPwd(), inst.getR(), 2*i, inst.q))).mod(inst.q);
 				}
 				else
 				{
 					beta = inst.getBeta(i);				//a needs to be replaced by beta values
-					xValues[i] = util.P(inst.getR(), 2*i+1, init.getQ());
-					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, init.getQ()))).mod(init.getQ());
+					xValues[i] = util.P(inst.getR(), 2*i+1, inst.q);
+					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, inst.q))).mod(inst.q);
 				}
 			}
 
 		}
 		catch(Exception e){
 			System.out.println("Error in calculateXY " + e);
+			e.printStackTrace();
 		}
 	}
 
