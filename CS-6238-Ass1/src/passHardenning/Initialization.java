@@ -42,17 +42,18 @@ public class Initialization {
 		pwd = readPwd();
 		answers = askQuestions();
 		inst = new InstructionTable(this);
-
+		history = new History(this);
 	}
 
 	public void initializeNewUser(){
+		//Generate files for this new user...
 		generateInstructionTable();		
+		generateHistoryFile();
 		
 	} 
 	public void initializeExistingUser(){
 		inst.readInstrTable(); // read the alpha and beta values
-		
-		history = new History(this);
+		// hist.readHistory();
 		login = new Login(inst, util, this, history);
 	}
 	
@@ -82,16 +83,26 @@ public class Initialization {
 		//hpwd is the hardened password
 		hpwd = util.getRandomH(q);
 	}
-		
+	
+	//This is run when a new user is created
+	//Or else the instruction table is usually
+	//read from a file instead. 
 	private void generateInstructionTable(){
+		//Choose the system parameters for the 1st time
 		chooseQ();
 		chooseHPwd();
 		choosePolynomial();
+		
+		//Calculate the alpha and beta values
 		inst.buildInstrTable(); //calculate the alpha and beta values
+		inst.writeInstrTable(); //write it to disk for future logins to use
 	}
 	
+	//This is run to create a new history file
+	//for a new user. Or else the history is usually
+	//read from a file instead.
 	private void generateHistoryFile(){
-		
+		history.update(); //create new history file and encrypt and write it to disk.
 	}
 	
 	

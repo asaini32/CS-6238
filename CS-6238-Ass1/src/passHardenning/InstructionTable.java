@@ -32,6 +32,7 @@ public class InstructionTable {
 	//this is run once for a new user or when existing user 
 	//needs to change his polynomial
 	public void buildInstrTable(){
+		
 		q = init.getQ();
 		r = util.getRandomH(q);
 		hpwd = init.getHpwd();
@@ -40,6 +41,8 @@ public class InstructionTable {
 		for(int i = 0; i < m; i++){
 			alpha[i] = calculateAlpha(r, i, pwd);
 			beta[i] = calculateBeta(r, i, pwd);
+			//Threshold can be arbitrary for the 1st h-1 times
+			//Threshold is only calculated if there has been h logins
 			threshold[i] = 0.0;
 		}		
 	}

@@ -22,7 +22,7 @@ public class Utilities {
 	public BigInteger evaluatePoly(BigInteger[] poly, BigInteger q, BigInteger x){
 		BigInteger runningTotal = new BigInteger("0");
 		for(int i = 0; i < poly.length; i++){
-			runningTotal.add(x.pow(i).multiply(poly[0]));
+			runningTotal = runningTotal.add(x.pow(i).multiply(poly[0]));
 			runningTotal = runningTotal.mod(q);
 		}
 		return runningTotal;

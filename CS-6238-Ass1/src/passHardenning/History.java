@@ -34,13 +34,14 @@ public class History {
 
 	public History(Initialization init){
 		this.init = init;
+		historyFile = "";
 	}
 
 	//decryption method for history file
 	public void decrypt(BigInteger candidateHpwd){
 
 		try {
-			deserializeObejct(FILE_NAME);    //deserializing the history file
+			deserializeObejct(init.getUserName() + "_" + FILE_NAME);    //deserializing the history file
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -106,7 +107,7 @@ public class History {
 
 	//this method deserializes the history file
 	private void deserializeObejct(String fileName)throws IOException{
-		File file = new File(FILE_NAME);
+		File file = new File(fileName);
 		try{
 			ObjectInputStream obj = new ObjectInputStream(new FileInputStream(file));
 			encryptedTextReading = (byte[]) obj.readObject(); 
@@ -135,12 +136,13 @@ public class History {
 		return false;
 	}
 
-	//makes the new history file
+	//updates the history file with the feature values
+	//obtained from this log in.
 	public void update(){
 		try {
-			BuildHistoryFile();
+			updateHistoryFile();
 			encrypt();
-			serializeObejct(FILE_NAME);
+			serializeObejct(init.getUserName() + "_" + FILE_NAME);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -148,21 +150,38 @@ public class History {
 
 	}
 
+
 	//builds the history file for a particular user
-	private void BuildHistoryFile(){
+	//appends the feature values from this log in to the old history file
+	private void updateHistoryFile(){
 		try{
+
+			//Remove the 1st history entry as it is too old
+			//only remove if it is not a freshly created history file
+			if(historyFile.length() != 0){
+				int m = init.getM();
+				int curr = 0;
+				//remove m lines
+				for(int i = 0; i < m; i++){
+					curr = historyFile.indexOf('\n', curr) + 1;
+				}
+				historyFile = historyFile.substring(curr);
+			}
+
+
+			//Build the latest entry and append it to the end of history file
 			StringBuilder strBuilder = new StringBuilder();
 			int count = init.getM();
 			for(int i=0; i<count; i++){
 				strBuilder.append("Feature");
 				strBuilder.append(i);
 				strBuilder.append(":");
-				strBuilder.append("featureVectorvalue");				//this needs to be upadted with the feature value.
-				historyFile = strBuilder.toString();
+				strBuilder.append(init.getAnswers()[i]);
+				strBuilder.append("\n");
 			}
+			historyFile.concat(strBuilder.toString());
 		}
 		catch(Exception e){
-
 		}
 
 	}
@@ -230,7 +249,7 @@ public class History {
 
 	//this method serializes the history file
 	private void serializeObejct(String fileName)throws IOException{
-		File file = new File(FILE_NAME);
+		File file = new File(fileName);
 		try{
 
 			ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(file));
