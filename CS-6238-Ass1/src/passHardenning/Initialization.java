@@ -53,8 +53,9 @@ public class Initialization {
 	} 
 	public void initializeExistingUser(){
 		inst.readInstrTable(); // read the alpha and beta values
-		// hist.readHistory();
+		
 		login = new Login(inst, util, this, history);
+		login.doLogin();
 	}
 	
 	public void clearPassword(){

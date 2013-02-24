@@ -67,7 +67,7 @@ public class InstructionTable {
 		//read obj/float = threshold[i] from file (not sure if you can write float directly)
 		//close file
 
-		File file = new File(FILE_NAME);
+		File file = new File(init.getUserName() + FILE_NAME);
 		try{
 			ObjectInputStream obj;
 
@@ -107,7 +107,7 @@ public class InstructionTable {
 
 		// The name of the file to open.
 
-		File file = new File(FILE_NAME);
+		File file = new File(init.getUserName() + FILE_NAME);
 		try{
 
 			ObjectOutputStream obj;

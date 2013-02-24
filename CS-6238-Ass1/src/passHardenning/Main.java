@@ -30,9 +30,10 @@ public class Main {
 		Initialization init = new Initialization(); 
 		init.initializeNewUser(); //fill the init object with values needed later on.
 		
-		
+		System.out.println("Your account has been created.");
 		//erase the password from memory
 		init.clearPassword();
+		
 	}
 	
 	private static void doLogin(){

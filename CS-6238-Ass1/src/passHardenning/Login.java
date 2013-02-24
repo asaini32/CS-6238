@@ -22,6 +22,7 @@ public class Login {
 		this.history = history;
 	}
 
+	//assumes threshold, feature values, pwd are already read. 
 	public void doLogin(){	
 		this.calculateXY(init.answers); 					 //pass feature value
 		this.calculateHpwd();   							//calling the function to calculate Hpwd

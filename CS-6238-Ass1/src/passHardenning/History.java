@@ -140,9 +140,9 @@ public class History {
 	//obtained from this log in.
 	public void update(){
 		try {
-			updateHistoryFile();
-			encrypt();
-			serializeObejct(init.getUserName() + "_" + FILE_NAME);
+			updateHistoryFile(); //update the historyFile string
+			encrypt(); //encrypts the string
+			serializeObejct(init.getUserName() + "_" + FILE_NAME); // writes it out to hard disk
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -156,9 +156,8 @@ public class History {
 	private void updateHistoryFile(){
 		try{
 
-			//Remove the 1st history entry as it is too old
-			//only remove if it is not a freshly created history file
-			if(historyFile.length() != 0){
+			//Remove the 1st history entry if the history file is already full (has h=10 entries)
+			if(isFull()){
 				int m = init.getM();
 				int curr = 0;
 				//remove m lines
@@ -167,7 +166,6 @@ public class History {
 				}
 				historyFile = historyFile.substring(curr);
 			}
-
 
 			//Build the latest entry and append it to the end of history file
 			StringBuilder strBuilder = new StringBuilder();
@@ -185,7 +183,14 @@ public class History {
 		}
 
 	}
-
+	
+	
+	private boolean isFull(){
+		//checks if there are already h records in this.historyFile
+		return false;
+	}
+	
+	
 	//method to encrypt the history file
 	private void encrypt(){
 		BigInteger keyString = init.getHpwd();
