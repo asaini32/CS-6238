@@ -20,6 +20,8 @@ public class Login {
 		this.util = util;
 		this.init = init;
 		this.history = history;
+		this.xValues = new BigInteger[init.getM()];
+		this.yValues = new BigInteger[init.getM()];
 	}
 
 	//assumes threshold, feature values, pwd are already read. 
@@ -54,6 +56,7 @@ public class Login {
 				else
 				{
 					beta = inst.getBeta(i);				//a needs to be replaced by beta values
+
 					xValues[i] = util.P(inst.getR(), 2*i+1, inst.q);
 					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, inst.q))).mod(inst.q);
 				}
@@ -104,17 +107,21 @@ public class Login {
 
 	//method to calculate lamda that is used in Hped calculation
 	private BigInteger Lamda(int i){
-		BigInteger lamda = null;
+		BigInteger lamda = new BigInteger("1");
 		try{ 
 			int count = init.getM();
 			for(int j =0; j<count; j++){
 				if(i!=j){
-					lamda.multiply(xValues[j].divide(xValues[j].subtract(xValues[i])));
+					if((xValues[j].subtract(xValues[i]).gcd(inst.q).equals(BigInteger.ONE)));
+					{
+						System.out.println("It is a Invertible");
+					}
+					lamda = lamda.multiply(xValues[j].multiply(xValues[j].subtract(xValues[i]).modInverse(inst.q)));
 				}
 			}
 		}
 		catch(Exception e){
-
+			e.printStackTrace();
 		}
 		return lamda;
 	}
