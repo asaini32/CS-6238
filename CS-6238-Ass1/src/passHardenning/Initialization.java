@@ -150,13 +150,7 @@ public class Initialization {
 			answers[i] = questions[i].ask(sc);
 		}
 		return answers;
-	}
-	
-	
-	
-	
-	
-	
+	}	
 	
 	//Getters
 	public BigInteger getQ(){
