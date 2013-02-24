@@ -28,6 +28,7 @@ public class Login {
 	public void doLogin(){	
 		this.calculateXY(init.answers); 					 //pass feature value
 		this.calculateHpwd();   							//calling the function to calculate Hpwd
+		System.out.println("hpwd is " + candidateHpwd);
 		this.decryptHistoryFile();							//decrypting the history file.
 		boolean status = this.verifyHistoryFile();			//verifying the history file.
 		if(status)
@@ -60,6 +61,8 @@ public class Login {
 					xValues[i] = util.P(inst.getR(), 2*i+1, inst.q);
 					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, inst.q))).mod(inst.q);
 				}
+				System.out.println("x[" + i + "] is " + xValues[i]);
+				System.out.println("y[" + i + "] is " + yValues[i]);
 			}
 
 		}
@@ -73,12 +76,12 @@ public class Login {
 	private void calculateHpwd(){
 		try{
 			int count = init.getM();
+			this.candidateHpwd = new BigInteger("0");
 			for(int i=0; i<count; i++){			
 				//calculated the hardened password from the 
 				//values in the alpha beta instruction table
-				this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(init.getQ()));
+				candidateHpwd = this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(inst.q));
 			}
-			decryptHistoryFile();    //calling the method to decrypt history file
 		}
 		catch(Exception e){
 
@@ -112,11 +115,7 @@ public class Login {
 			int count = init.getM();
 			for(int j =0; j<count; j++){
 				if(i!=j){
-					if((xValues[j].subtract(xValues[i]).gcd(inst.q).equals(BigInteger.ONE)));
-					{
-						System.out.println("It is a Invertible");
-					}
-					lamda = lamda.multiply(xValues[j].multiply(xValues[j].subtract(xValues[i]).modInverse(inst.q)));
+					lamda = lamda.multiply(xValues[j].multiply(   xValues[j].subtract(xValues[i]).mod(inst.q).modInverse(inst.q)   )  );
 				}
 			}
 		}

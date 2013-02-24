@@ -73,6 +73,7 @@ public class InstructionTable {
 
 			obj = new ObjectInputStream(new FileInputStream(file));
 			q = (BigInteger) obj.readObject(); 
+			System.out.println("q is " + q);
 			r = (BigInteger) obj.readObject();
 			int count = init.getM();
 			for(int i=0; i<count; i++){
@@ -113,7 +114,8 @@ public class InstructionTable {
 			ObjectOutputStream obj;
 
 			obj = new ObjectOutputStream(new FileOutputStream(file));
-			obj.writeObject(q);
+			obj.writeObject(q);		
+			System.out.println("q is " + q);
 			obj.writeObject(r);
 
 			int count = init.getM();
@@ -156,7 +158,9 @@ public class InstructionTable {
 	}
 	private BigInteger calculateAlphaBeta(BigInteger r, int input, char[] pwd){
 		BigInteger randomizedX = util.P(r, input , q);
+		System.out.println("X[" + input + "] is " + randomizedX);
 		BigInteger y = util.evaluatePoly(polynomial, r, randomizedX); // this is y_{ai}^0/1 in Monrose section 5.1 item 2
+		System.out.println("y[" + input + "] is " + y);
 		BigInteger g = util.G(pwd, r, input, q); 
 		return y.add(g).mod(q);
 	}

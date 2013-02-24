@@ -48,6 +48,7 @@ public class Initialization {
 	public void initializeNewUser(){
 		//Generate files for this new user...
 		generateInstructionTable();		
+		System.out.println("hpwd is " + hpwd);
 		generateHistoryFile();
 		
 	} 
@@ -92,6 +93,8 @@ public class Initialization {
 		//Choose the system parameters for the 1st time
 		chooseQ();
 		chooseHPwd();
+		System.out.println("immediately hpwd is " + hpwd + " and compare is " + hpwd.compareTo(BigInteger.ZERO) );
+		
 		choosePolynomial();
 		
 		//Calculate the alpha and beta values
