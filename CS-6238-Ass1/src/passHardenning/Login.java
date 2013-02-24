@@ -82,6 +82,7 @@ public class Login {
 				//values in the alpha beta instruction table
 				candidateHpwd = this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(inst.q));
 			}
+			System.out.println("Candidate Hpwd: " + candidateHpwd);
 		}
 		catch(Exception e){
 
@@ -115,9 +116,14 @@ public class Login {
 			int count = init.getM();
 			for(int j =0; j<count; j++){
 				if(i!=j){
-					lamda = lamda.multiply(xValues[j].multiply(   xValues[j].subtract(xValues[i]).mod(inst.q).modInverse(inst.q)   )  );
+					BigInteger int1 = (xValues[j].subtract(xValues[i])).mod(inst.q);
+					BigInteger int2 = int1.modInverse(inst.q);
+					BigInteger int3 = (xValues[j].multiply(int2)).mod(inst.q);
+					lamda = (lamda.multiply(int3)).mod(inst.q);
+//					lamda = lamda.multiply(xValues[j].multiply((xValues[j].subtract(xValues[i]).mod(inst.q)).modInverse(inst.q)));
 				}
 			}
+			System.out.println("The value of lamda:  "+ lamda);
 		}
 		catch(Exception e){
 			e.printStackTrace();
