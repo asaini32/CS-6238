@@ -31,6 +31,7 @@ public class History {
 	private byte[] decryptedText = null;
 	private String historyFile;
 	private String getHistoryFile;
+	private byte[] iv;
 
 	public History(Initialization init){
 		this.init = init;
@@ -62,7 +63,9 @@ public class History {
 
 		// setup an IV (initialization vector) that should be
 		// randomly generated for each input that's encrypted
-		byte[] iv = new byte[cipher.getBlockSize()];
+//		byte[] iv = new byte[cipher.getBlockSize()];
+
+		System.out.println("The IV in encryption: " + iv);
 		new SecureRandom().nextBytes(iv);
 		IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
@@ -112,6 +115,7 @@ public class History {
 		File file = new File(fileName);
 		try{
 			ObjectInputStream obj = new ObjectInputStream(new FileInputStream(file));
+			iv = (byte[]) obj.readObject();
 			encryptedTextReading = (byte[]) obj.readObject(); 
 			obj.close();
 		}
@@ -215,7 +219,8 @@ public class History {
 
 		// setup an IV (initialization vector) that should be
 		// randomly generated for each input that's encrypted
-		byte[] iv = new byte[cipher.getBlockSize()];
+		iv = new byte[cipher.getBlockSize()];
+		System.out.println("The IV in encryption: " + iv);
 		new SecureRandom().nextBytes(iv);
 		IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
@@ -264,6 +269,7 @@ public class History {
 		try{
 
 			ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream(file));
+			obj.writeObject(iv);
 			obj.writeObject(encryptedTextWriting); 
 			obj.close();
 		}
