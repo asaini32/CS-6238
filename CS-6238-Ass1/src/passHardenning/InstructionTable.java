@@ -24,6 +24,9 @@ public class InstructionTable {
 	int m;
 	BigInteger r;
 	double[] threshold;
+	double[] mean;
+	double[] std_dev;
+	
 	Initialization init;
 	private String FILE_NAME = "_inst.txt";
 
@@ -59,7 +62,7 @@ public class InstructionTable {
 	}
 
 	//This method calculates the threshold values for each feature vector
-	public void updateThreshold(String historyFile){
+	public void updateMean(String historyFile){
 		int h = init.getH();
 		double [] feature = new double[m];
 
@@ -91,9 +94,15 @@ public class InstructionTable {
 			e.printStackTrace();
 		}
 		//				feature[j] = feature[j] + 1;
+		mean = feature;
 	}
-
-
+	
+	
+	//Input is this.mean
+	//Output is this.std_dev
+	public void calculateStd_Dev(){
+				
+	}
 
 	public void readInstrTable(){
 		//get userName from this.init.userName

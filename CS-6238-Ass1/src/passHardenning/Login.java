@@ -41,7 +41,8 @@ public class Login {
 		
 		if(history.isFull()) {
 			System.out.println("File is full, updating mean and standard deviation");
-			inst.updateThreshold(history.getHistoryFile());
+			inst.updateMean(history.getHistoryFile());
+			inst.calculateStd_Dev();
 		}
 		init.randomizeInstructionTable();
 	}
