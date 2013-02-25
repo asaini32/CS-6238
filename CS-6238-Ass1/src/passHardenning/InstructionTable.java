@@ -22,11 +22,12 @@ public class InstructionTable {
 	char[] pwd;
 	BigInteger hpwd; // hardened password
 	int m;
+	int h;
 	BigInteger r;
 	int[] threshold;
 	double[] mean;
 	double[] std_dev;
-	
+
 	Initialization init;
 	private String FILE_NAME = "_inst.txt";
 
@@ -37,6 +38,7 @@ public class InstructionTable {
 	public InstructionTable(Initialization init) {
 		this.init = init;
 		this.m = init.getM();
+		this.h = init.getH();
 		this.util = init.getUtil();
 		this.pwd = init.getPwd();
 
@@ -80,9 +82,7 @@ public class InstructionTable {
 
 	//This method calculates the threshold values for each feature vector
 	public void updateMean(String historyFile){
-		int h = init.getH();
-		double [] feature = new double[m];
-
+		mean = new double[m];
 
 		// convert String into InputStream
 		InputStream is = new ByteArrayInputStream(historyFile.getBytes());
@@ -96,29 +96,53 @@ public class InstructionTable {
 				int colon = line.indexOf(":");
 				int index = Integer.parseInt(line.substring(7,colon));
 
-				feature[index] = feature[index] + Double.parseDouble(line.substring(colon + 1));
+				mean[index] = mean[index] + Double.parseDouble(line.substring(colon + 1));
 
 			}
 
-			for(int i=0 ; i<feature.length ; i++)
+			for(int i=0 ; i<mean.length ; i++)
 			{
-				feature[i] = feature[i]/h;
-				//System.out.println("feature values" + feature[i]);
+				mean[i] = mean[i]/h;
+				System.out.println("feature values: " + mean[i]);
 			}
 			br.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//				feature[j] = feature[j] + 1;
-		mean = feature;
 	}
-	
-	
+
+
 	//Input is this.mean
 	//Output is this.std_dev
-	public void calculateStd_Dev(){
-				
+	public void calculateStd_Dev(String historyFile){
+		std_dev = new double[m];
+		// convert String into InputStream
+		InputStream is = new ByteArrayInputStream(historyFile.getBytes());
+
+		// read it with BufferedReader
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+		String line;
+		try {
+			while ((line = br.readLine()) != null) {
+				int colon = line.indexOf(":");
+				int index = Integer.parseInt(line.substring(7,colon));
+
+				std_dev[index] = std_dev[index] + Math.pow((Double.parseDouble(line.substring(colon + 1)) - mean[index]) , 2);
+
+			}
+
+			for(int i=0 ; i<mean.length ; i++)
+			{
+				std_dev[i] = Math.sqrt(std_dev[i]/h);
+				System.out.println("feature values: " + std_dev[i]);
+			}
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void readInstrTable(){
@@ -222,13 +246,13 @@ public class InstructionTable {
 		BigInteger randomizedX = util.P(r, input, q);
 		//System.out.println("X[" + input + "] is " + randomizedX);
 		BigInteger y = util.evaluatePoly(polynomial, q, randomizedX); // this is
-																		// y_{ai}^0/1
-																		// in
-																		// Monrose
-																		// section
-																		// 5.1
-																		// item
-																		// 2
+		// y_{ai}^0/1
+		// in
+		// Monrose
+		// section
+		// 5.1
+		// item
+		// 2
 		//System.out.println("y[" + input + "] is " + y);
 		BigInteger g = util.G(pwd, r, input, q);
 		return y.add(g).mod(q);
