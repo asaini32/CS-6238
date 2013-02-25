@@ -189,13 +189,16 @@ public class History {
 		}
 		catch(Exception e){
 		}
-		System.out.println("historyFIle is updated to : " + historyFile + " end of file.");
+		//System.out.println("historyFIle is updated to : " + historyFile + " end of file.");
 	}
 	
 	
-	private boolean isFull(){
+	public boolean isFull(){
 		//checks if there are already h records in this.historyFile
-		return false;
+		int numLines = 0;
+		int pos = 0;
+		while( (pos = historyFile.indexOf('\n', pos) ) != -1){ numLines++; pos++;}
+		return numLines == init.getH()*init.getM();
 	}
 	
 	

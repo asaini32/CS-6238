@@ -36,8 +36,14 @@ public class Login {
 		{
 			System.out.println("Login Successful");
 		}
+		
 		this.updateHistoryFile();							//updating the history file.
-		inst.updateThreshold(history.getHistoryFile());
+		
+		if(history.isFull()) {
+			System.out.println("File is full, updating mean and standard deviation");
+			inst.updateThreshold(history.getHistoryFile());
+		}
+		init.randomizeInstructionTable();
 	}
 
 	private void calculateXY(int[] featureValues){
@@ -63,8 +69,8 @@ public class Login {
 					xValues[i] = util.P(inst.getR(), 2*i+1, inst.q);
 					yValues[i] = beta.subtract((util.G(init.getPwd(), inst.getR(), 2*i+1, inst.q))).mod(inst.q);
 				}
-				System.out.println("x[" + i + "] is " + xValues[i]);
-				System.out.println("y[" + i + "] is " + yValues[i]);
+				//System.out.println("x[" + i + "] is " + xValues[i]);
+				//System.out.println("y[" + i + "] is " + yValues[i]);
 			}
 
 		}
@@ -85,8 +91,8 @@ public class Login {
 				candidateHpwd = this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(inst.q));
 			}
 			candidateHpwd = candidateHpwd.mod(inst.q);
-			System.out.println("Candidate Hpwd: " + candidateHpwd);
-			System.out.println("q is " + inst.q);
+			//System.out.println("Candidate Hpwd: " + candidateHpwd);
+			//System.out.println("q is " + inst.q);
 		}
 		catch(Exception e){
 
@@ -127,7 +133,7 @@ public class Login {
 //					lamda = lamda.multiply(xValues[j].multiply((xValues[j].subtract(xValues[i]).mod(inst.q)).modInverse(inst.q)));
 				}
 			}
-			System.out.println("The value of lamda:  "+ lamda);
+			//System.out.println("The value of lamda:  "+ lamda);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -27,7 +27,7 @@ public class Initialization {
 
 	private final int m;  // how many questions/feature answers
 	private final int h;  // how mBigIntegerany records to keep in history file
-
+	
 	private History history;
 	private InstructionTable inst;
 	private Login login;
@@ -74,7 +74,7 @@ public class Initialization {
 		//Use System.in or scanner class to get user's password and set to this.pwd
 	}
 	
-	private void choosePolynomial(){
+	protected void choosePolynomial(){
 		polynomial = util.generatePoly(m, hpwd, q);
 		
 	}
@@ -94,15 +94,26 @@ public class Initialization {
 	private void generateInstructionTable(){
 		//Choose the system parameters for the 1st time
 		chooseQ();
-		System.out.println("q is just chosen. it is " + q);
+		//System.out.println("q is just chosen. it is " + q);
 		chooseHPwd();
-		System.out.println("immediately hpwd is " + hpwd + " and compare is " + hpwd.compareTo(BigInteger.ZERO) );
-		System.out.println("polynomial is just chosen. q is " + q);
+		//System.out.println("immediately hpwd is " + hpwd + " and compare is " + hpwd.compareTo(BigInteger.ZERO) );
+		//System.out.println("polynomial is just chosen. q is " + q);
 		choosePolynomial();
 		
 		//Calculate the alpha and beta values
 		inst.buildInstrTable(); //calculate the alpha and beta values
 		System.out.println("instruction table is just built. q is " + q);
+		inst.writeInstrTable(); //write it to disk for future logins to use
+	}
+	
+	//This is called when an existing user logs off
+	//The polynomial is changed to a new random one.
+	public void randomizeInstructionTable(){
+		this.q = inst.q;
+		choosePolynomial();
+		//Calculate the alpha and beta values
+		inst.buildInstrTable(); //calculate the alpha and beta values
+		System.out.println("Instruction table is rebuilt. ");
 		inst.writeInstrTable(); //write it to disk for future logins to use
 	}
 	
