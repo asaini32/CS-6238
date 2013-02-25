@@ -11,10 +11,16 @@ import java.util.Scanner;
 //Main passes the init object around to whoever needs the information
 public class Initialization {
 	private static final String qString[] = 
-		{ "1. How long ...", "2. How many ...",
-		"3. How much ...", "4. How many ...", "5. How many ...",
-		"6. How many ...", "7. How many ...", "8. How many ...",
-		"9. How many ...", "10. How many ...", };
+		{ "1. How many cups of coffee do you drink everyday?", 
+		"2. How many times you go for trekking on a monthly basis?",
+		"3. How many movies do you watch every week?", 
+		"4. How many pizzas do you order per week?", 
+		"5. How many countries have you been to?",
+		"6. How many books do you read per month?", 
+		"7. How many times do you go to Publix on a weekly basis?", 
+		"8. How many eggs do you eat per week?",
+		"9. How many many friends do you make on facebook per month?", 
+		"10. How many web sites do you visit every hour?"};
 	
 	private Utilities util;
 	private String userName;
