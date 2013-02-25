@@ -40,13 +40,14 @@ public class History {
 	//decryption method for history file
 	public void decrypt(BigInteger candidateHpwd){
 
-		try {
-			deserializeObejct(init.getUserName() + "_" + FILE_NAME);    //deserializing the history file
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
+//		try {
+//			deserializeObejct(init.getUserName() + "_" + FILE_NAME);    //deserializing the history file
+//		} catch (IOException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
+		encryptedTextReading = encryptedTextWriting;
+		
 		// setup AES cipher in CBC mode with PKCS #5 padding
 		Cipher cipher = null;
 		try {
@@ -103,6 +104,7 @@ public class History {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		historyFile = getHistoryFile;
 	}
 
 	//this method deserializes the history file
@@ -141,7 +143,10 @@ public class History {
 	public void update(){
 		try {
 			updateHistoryFile(); //update the historyFile string
+			System.out.println("before encryption: " + historyFile + " end of file.");
 			encrypt(); //encrypts the string
+			decrypt(init.getHpwd());
+			System.out.println("after encryption: " + historyFile + " end of file.");
 			serializeObejct(init.getUserName() + "_" + FILE_NAME); // writes it out to hard disk
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -177,7 +182,8 @@ public class History {
 				strBuilder.append(init.getAnswers()[i]);
 				strBuilder.append("\n");
 			}
-			historyFile.concat(strBuilder.toString());
+
+			historyFile = historyFile.concat(strBuilder.toString());
 		}
 		catch(Exception e){
 		}

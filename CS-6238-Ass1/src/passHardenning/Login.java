@@ -82,6 +82,7 @@ public class Login {
 				//values in the alpha beta instruction table
 				candidateHpwd = this.candidateHpwd.add(yValues[i].multiply(Lamda(i)).mod(inst.q));
 			}
+			candidateHpwd = candidateHpwd.mod(inst.q);
 			System.out.println("Candidate Hpwd: " + candidateHpwd);
 			System.out.println("q is " + inst.q);
 		}
