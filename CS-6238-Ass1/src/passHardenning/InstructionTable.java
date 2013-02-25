@@ -23,7 +23,7 @@ public class InstructionTable {
 	BigInteger hpwd; // hardened password
 	int m;
 	BigInteger r;
-	double[] threshold;
+	int[] threshold;
 	double[] mean;
 	double[] std_dev;
 	
@@ -42,7 +42,11 @@ public class InstructionTable {
 
 		alpha = new BigInteger[m];
 		beta = new BigInteger[m];
-		threshold = new double[m];
+		threshold = new int[m];
+		for(int i = 0; i < m; i++){
+			threshold[i] = Main.t;
+		}
+		
 	}
 
 	//this is run once for a new user or when existing user 
@@ -59,6 +63,19 @@ public class InstructionTable {
 			alpha[i] = calculateAlpha(r, i, pwd);
 			beta[i] = calculateBeta(r, i, pwd);
 		}
+	}
+	
+	//Not all alpha and beta values can be good. Some 
+	//of them has to be bad to reflect the user's patterns
+	public void disturbValues(){
+		for(int i = 0; i < mean.length; i++){
+			
+			//if feature is distinguishing
+			if( Math.abs(mean[i] - threshold[i]) > Main.k * std_dev[i]){
+					if(mean[i] < threshold[i]){ beta[i] = util.getRandomH(q);}
+					else {alpha[i] = util.getRandomH(q);}
+			}			
+		}		
 	}
 
 	//This method calculates the threshold values for each feature vector
@@ -127,7 +144,7 @@ public class InstructionTable {
 			for (int i = 0; i < count; i++) {
 				alpha[i] = (BigInteger) obj.readObject();
 				beta[i] = (BigInteger) obj.readObject();
-				threshold[i] = (Double) obj.readObject();
+				//threshold[i] = (Double) obj.readObject();
 			}
 			obj.close();
 		} catch (ClassNotFoundException e) {
@@ -167,7 +184,7 @@ public class InstructionTable {
 			for (int i = 0; i < count; i++) {
 				obj.writeObject(alpha[i]);
 				obj.writeObject(beta[i]);
-				obj.writeObject(threshold[i]);
+				//obj.writeObject(threshold[i]);
 			}
 
 			obj.close();

@@ -28,23 +28,28 @@ public class Login {
 	public void doLogin(){	
 		this.calculateXY(init.answers); 					 //pass feature value
 		this.calculateHpwd();   							//calling the function to calculate Hpwd
-		System.out.println("hpwd is " + candidateHpwd);
+		//System.out.println("hpwd is " + candidateHpwd);
 		this.init.hpwd = candidateHpwd;
 		this.decryptHistoryFile();							//decrypting the history file.
 		boolean status = this.verifyHistoryFile();			//verifying the history file.
 		if(status)
 		{
 			System.out.println("Login Successful");
+		} else {
+			System.out.println("Bad feature values or password.");
+			System.exit(1);			
 		}
 		
 		this.updateHistoryFile();							//updating the history file.
 		
+		init.randomizeInstructionTable();
 		if(history.isFull()) {
 			System.out.println("File is full, updating mean and standard deviation");
 			inst.updateMean(history.getHistoryFile());
 			inst.calculateStd_Dev();
-		}
-		init.randomizeInstructionTable();
+			inst.disturbValues();
+		}		
+		
 	}
 
 	private void calculateXY(int[] featureValues){

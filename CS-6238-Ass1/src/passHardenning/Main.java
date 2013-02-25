@@ -10,7 +10,9 @@ public class Main {
 	 */
 	public static final int m = 2; //number of questions/answers/distinguishing features
 	public static final int h = 10; //number of records to keep in history
-
+	public static final int t = 10; //threshold value for each feature (for simplicity assume same t for all features)
+	public static final double k = 1.0; // system parameter 
+	
 	public static void main(String[] args) {
 		
 		// New user or first time running
