@@ -1,10 +1,14 @@
 package passHardenning;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
@@ -40,7 +44,7 @@ public class InstructionTable {
 	//this is run once for a new user or when existing user 
 	//needs to change his polynomial
 	public void buildInstrTable(){
-		
+
 		q = init.getQ();
 		System.out.println("In Instruction table: the q i got is: " + q);
 		r = util.getRandomH(q);
@@ -56,22 +60,43 @@ public class InstructionTable {
 		}		
 	}
 
+	//This method calculates the threshold values for each feature vector
 	public void updateThreshold(String historyFile){
-		//String manipulation to get past h records
-		//there will be h records (oldest to newest)
-		//each record has m lines (for m features)	
-		//Example for h = 3, m = 2
-		//Feature0:1
-//		Feature1:2
-//		Feature0:3
-//		Feature1:4
-//		Feature0:5
-//		Feature1:6
-		
-		//mean of feature i = sum ( all h values of feature i) / h
-		//Update threshold[i] = mean of each feature
+		int h = init.getH();
+		double [] feature = new double[m];
+
+
+		// convert String into InputStream
+		InputStream is = new ByteArrayInputStream(historyFile.getBytes());
+
+		// read it with BufferedReader
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+		String line;
+		try {
+			while ((line = br.readLine()) != null) {
+				int colon = line.indexOf(":");
+				int index = Integer.parseInt(line.substring(7,colon));
+
+				feature[index] = feature[index] + Double.parseDouble(line.substring(colon + 1));
+
+			}
+
+			for(int i=0 ; i<feature.length ; i++)
+			{
+				feature[i] = feature[i]/h;
+				//System.out.println("feature values" + feature[i]);
+			}
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//				feature[j] = feature[j] + 1;
 	}
-	
+
+
+
 	public void readInstrTable(){
 		//get userName from this.init.userName
 		//open the file with filename of userName + "_inst.txt"
