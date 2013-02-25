@@ -65,8 +65,8 @@ public class History {
 		// randomly generated for each input that's encrypted
 //		byte[] iv = new byte[cipher.getBlockSize()];
 
-		System.out.println("The IV in encryption: " + iv);
-		new SecureRandom().nextBytes(iv);
+		
+		//new SecureRandom().nextBytes(iv);
 		IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
 		// hash keyString with SHA-256 and crop the output to 128-bit for key
@@ -220,8 +220,9 @@ public class History {
 		// setup an IV (initialization vector) that should be
 		// randomly generated for each input that's encrypted
 		iv = new byte[cipher.getBlockSize()];
-		System.out.println("The IV in encryption: " + iv);
+		
 		new SecureRandom().nextBytes(iv);
+		
 		IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
 		// hash keyString with SHA-256 and crop the output to 128-bit for key
