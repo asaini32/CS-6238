@@ -74,8 +74,14 @@ public class InstructionTable {
 			
 			//if feature is distinguishing
 			if( Math.abs(mean[i] - threshold[i]) > Main.k * std_dev[i]){
-					if(mean[i] < threshold[i]){ beta[i] = util.getRandomH(q);}
-					else {alpha[i] = util.getRandomH(q);}
+					if(mean[i] < threshold[i]){ 
+						System.out.println("disturbing beta " + i); 
+						beta[i] = util.getRandomH(q);
+					}
+					else{
+						System.out.println("disturbing alpha " + i);
+						alpha[i] = util.getRandomH(q);
+					}
 			}			
 		}		
 	}
@@ -103,7 +109,7 @@ public class InstructionTable {
 			for(int i=0 ; i<mean.length ; i++)
 			{
 				mean[i] = mean[i]/h;
-				System.out.println("feature values: " + mean[i]);
+			//	System.out.println("feature values: " + mean[i]);
 			}
 			br.close();
 		} catch (IOException e) {
@@ -136,7 +142,7 @@ public class InstructionTable {
 			for(int i=0 ; i<mean.length ; i++)
 			{
 				std_dev[i] = Math.sqrt(std_dev[i]/h);
-				System.out.println("feature values: " + std_dev[i]);
+	//			System.out.println("feature values: " + std_dev[i]);
 			}
 			br.close();
 		} catch (IOException e) {

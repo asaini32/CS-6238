@@ -100,7 +100,9 @@ public class History {
 			e1.printStackTrace();
 		} catch (BadPaddingException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("Decryption error. Aborting decryption.");
+			System.exit(1);
+			//e1.printStackTrace();
 		}try {
 			getHistoryFile = new String(decryptedText, "UTF-8");
 		} catch (UnsupportedEncodingException e) {

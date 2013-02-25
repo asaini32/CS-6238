@@ -43,12 +43,15 @@ public class Login {
 		this.updateHistoryFile();							//updating the history file.
 		
 		init.randomizeInstructionTable();
+		
+		//if there are more than h log ins already, update mean and standard deviation.
 		if(history.isFull()) {
 			System.out.println("File is full, updating mean and standard deviation");
 			inst.updateMean(history.getHistoryFile());
 			inst.calculateStd_Dev(history.getHistoryFile());
-		}
-		init.randomizeInstructionTable();
+			inst.disturbValues();
+		}		
+		inst.writeInstrTable();
 	}
 
 	private void calculateXY(int[] featureValues){

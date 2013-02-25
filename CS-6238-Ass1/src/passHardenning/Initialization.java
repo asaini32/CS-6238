@@ -102,7 +102,7 @@ public class Initialization {
 		
 		//Calculate the alpha and beta values
 		inst.buildInstrTable(); //calculate the alpha and beta values
-		System.out.println("instruction table is just built. q is " + q);
+		//System.out.println("instruction table is just built. q is " + q);
 		inst.writeInstrTable(); //write it to disk for future logins to use
 	}
 	
@@ -114,8 +114,8 @@ public class Initialization {
 		//Calculate the alpha and beta values
 		inst.buildInstrTable(); //calculate the alpha and beta values
 		System.out.println("Instruction table is rebuilt. ");
-		inst.writeInstrTable(); //write it to disk for future logins to use
 	}
+	
 	
 	//This is run to create a new history file
 	//for a new user. Or else the history is usually
