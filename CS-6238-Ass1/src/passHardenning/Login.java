@@ -29,6 +29,7 @@ public class Login {
 		this.calculateXY(init.answers); 					 //pass feature value
 		this.calculateHpwd();   							//calling the function to calculate Hpwd
 		System.out.println("hpwd is " + candidateHpwd);
+		this.init.hpwd = candidateHpwd;
 		this.decryptHistoryFile();							//decrypting the history file.
 		boolean status = this.verifyHistoryFile();			//verifying the history file.
 		if(status)
@@ -36,6 +37,7 @@ public class Login {
 			System.out.println("Login Successful");
 		}
 		this.updateHistoryFile();							//updating the history file.
+		inst.updateThreshold(history.getHistoryFile());
 	}
 
 	private void calculateXY(int[] featureValues){

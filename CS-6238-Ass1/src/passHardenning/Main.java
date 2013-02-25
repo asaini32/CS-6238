@@ -38,11 +38,7 @@ public class Main {
 	
 	private static void doLogin(){
 		Initialization init = new Initialization(); 
-		init.initializeExistingUser(); //fill the init object with values needed later on.
-		
-		//Invoke Login object
-		init.getLogin().doLogin();
-		
+		init.initializeExistingUser(); //fill the init object with values needed later on.		
 		
 		init.clearPassword();	
 	}

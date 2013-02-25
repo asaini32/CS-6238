@@ -56,7 +56,22 @@ public class InstructionTable {
 		}		
 	}
 
-
+	public void updateThreshold(String historyFile){
+		//String manipulation to get past h records
+		//there will be h records (oldest to newest)
+		//each record has m lines (for m features)	
+		//Example for h = 3, m = 2
+		//Feature0:1
+//		Feature1:2
+//		Feature0:3
+//		Feature1:4
+//		Feature0:5
+//		Feature1:6
+		
+		//mean of feature i = sum ( all h values of feature i) / h
+		//Update threshold[i] = mean of each feature
+	}
+	
 	public void readInstrTable(){
 		//get userName from this.init.userName
 		//open the file with filename of userName + "_inst.txt"

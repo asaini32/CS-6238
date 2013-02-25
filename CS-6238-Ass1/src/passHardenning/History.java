@@ -147,7 +147,6 @@ public class History {
 	public void update(){
 		try {
 			updateHistoryFile(); //update the historyFile string
-			
 			encrypt(); //encrypts the string
 			
 			serializeObejct(init.getUserName() + "_" + FILE_NAME); // writes it out to hard disk
@@ -190,7 +189,7 @@ public class History {
 		}
 		catch(Exception e){
 		}
-
+		System.out.println("historyFIle is updated to : " + historyFile + " end of file.");
 	}
 	
 	
@@ -202,6 +201,7 @@ public class History {
 	
 	//method to encrypt the history file
 	private void encrypt(){
+		System.out.println("going to encrypt: " + historyFile + " end of file.");
 		BigInteger keyString = init.getHpwd();
 
 		// setup AES cipher in CBC mode with PKCS #5 padding
@@ -279,5 +279,10 @@ public class History {
 
 		}
 
+	}
+
+	public String getHistoryFile() {
+		// TODO Auto-generated method stub
+		return historyFile;
 	}
 }

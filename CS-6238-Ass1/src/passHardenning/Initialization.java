@@ -20,7 +20,7 @@ public class Initialization {
 	private String userName;
 	int[] answers; // raw feature values (answers to questions)
 	private char[] pwd; //normal, unhardened password
-	private BigInteger hpwd; //hardened password
+	protected BigInteger hpwd; //hardened password
 	
 	private BigInteger q; // the 160 bit prime number that's modulus group
 	private BigInteger[] polynomial;
@@ -58,6 +58,7 @@ public class Initialization {
 		
 		login = new Login(inst, util, this, history);
 		login.doLogin();
+		
 	}
 	
 	public void clearPassword(){
