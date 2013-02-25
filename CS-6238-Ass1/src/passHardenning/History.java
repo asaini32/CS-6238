@@ -41,13 +41,13 @@ public class History {
 	//decryption method for history file
 	public void decrypt(BigInteger candidateHpwd){
 
-//		try {
-//			deserializeObejct(init.getUserName() + "_" + FILE_NAME);    //deserializing the history file
-//		} catch (IOException e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		}
-		encryptedTextReading = encryptedTextWriting;
+		try {
+			deserializeObejct(init.getUserName() + "_" + FILE_NAME);    //deserializing the history file
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		
 		// setup AES cipher in CBC mode with PKCS #5 padding
 		Cipher cipher = null;
@@ -147,10 +147,9 @@ public class History {
 	public void update(){
 		try {
 			updateHistoryFile(); //update the historyFile string
-			System.out.println("before encryption: " + historyFile + " end of file.");
+			
 			encrypt(); //encrypts the string
-			decrypt(init.getHpwd());
-			System.out.println("after encryption: " + historyFile + " end of file.");
+			
 			serializeObejct(init.getUserName() + "_" + FILE_NAME); // writes it out to hard disk
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
